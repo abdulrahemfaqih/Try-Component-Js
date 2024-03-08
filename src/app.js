@@ -1,5 +1,7 @@
 class BlogPost extends HTMLElement {
-    title = 'Web Component'
+    title = ''
+    description = ''
+    link = ''
 
     constructor() {
         super()
@@ -10,6 +12,7 @@ class BlogPost extends HTMLElement {
     }
 
     connectedCallback() {
+        console.log('-- connected callback')
         this.render()
     }
     static get observedAttributes() {
@@ -17,15 +20,18 @@ class BlogPost extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-     
+        console.log('-- atribut canged')
+        this[name] = newValue || ''
+        this.render()
     }
 
     render() {
+        const {title, description, link} = this
         this.shadowRoot.innerHTML = `
         <div class="blog-post">
-            <h2>Simple Blog</h2>
-            <p>Excepteur voluptate velit ipsum ea et. Amet anim tempor tempor adipisicing ullamco. Pariatur consectetur Lorem laborum magna incididunt mollit. Veniam proident consectetur occaecat occaecat officia exercitation non commodo cillum labore consectetur voluptate. Non do aute consectetur laboris deserunt aliquip aute sunt duis. Exercitation laborum sint pariatur duis anim aliquip deserunt sit Lorem mollit.</p>
-            <a href='#'>learn more</a>
+            <h2>${title}</h2>
+            <p>${description}</p>
+            <a href="${link}">learn more</a>
         </div>
     `
 
